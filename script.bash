@@ -27,6 +27,13 @@ check_if_message_is_unsaved_or_empty() {
     fi
 }
 
+preview_message() {
+    echo -e "\n${FILE_PATH}"
+    echo -e '\n-----BEGIN PGP SIGNED MESSAGE-----\n'
+    cat "${FILE_PATH}"
+    echo -e '\n------END PGP SIGNED MESSAGE------\n'
+}
+
 main() {
 
     check_if_editor_is_set
@@ -41,10 +48,7 @@ main() {
 
         check_if_message_is_unsaved_or_empty
 
-        echo -e "\n${FILE_PATH}"
-        echo -e '\n-----BEGIN PGP SIGNED MESSAGE-----\n'
-        cat "${FILE_PATH}"
-        echo -e '\n------END PGP SIGNED MESSAGE------\n'
+        preview_message
 
         echo 'Type the action to perform and press ENTER, or press CTRL+C to cancel'
         echo '(Pressing ENTER without making a selection will default to: sign)'
