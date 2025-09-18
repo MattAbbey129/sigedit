@@ -60,6 +60,8 @@ main() {
                 else
                     echo 'Not deleting message'
                 fi
+            else
+                echo "Unknown action: ${MESSAGE_ACTION}"
             fi
         done
     done
