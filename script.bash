@@ -5,7 +5,9 @@
 
 main() {
 
-    echo 'Hello, world!'
+    mkdir -p "${HOME}/.local/state/sigedit"
+    local FILE_PATH="${HOME}/.local/state/sigedit/$(mktemp --dry-run "$(date +%Y%m%d%H%M%S)".XXXXXXXXXX)"
+    readonly FILE_PATH
 
 }
 
