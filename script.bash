@@ -43,6 +43,8 @@ main() {
         if [[ -z "${MESSAGE_ACTION}" || "${MESSAGE_ACTION}" == 's' || "${MESSAGE_ACTION}" == 'sign' ]]; then
             echo -e 'Signing message...\n'
             break # from the 'while true' loop
+        elif [[ "${MESSAGE_ACTION}" == 'c' || "${MESSAGE_ACTION}" == 'cancel' ]]; then
+            exit 0
         fi
     done
 
