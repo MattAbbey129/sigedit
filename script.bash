@@ -45,6 +45,15 @@ main() {
             break # from the 'while true' loop
         elif [[ "${MESSAGE_ACTION}" == 'c' || "${MESSAGE_ACTION}" == 'cancel' ]]; then
             exit 0
+        elif [[ "${MESSAGE_ACTION}" == 'd' || "${MESSAGE_ACTION}" == 'delete' ]]; then
+            local DELETION_ACTION=''
+            read -rp 'Are you sure you want to cancel and delete this message? [y/N] ' DELETEION_ACTION
+            if [[ "${DELETEION_ACTION}" == 'y' ]]; then
+                rm "${FILE_PATH}" && echo 'Message deleted'
+                exit 0
+            else
+                echo 'Not deleting message'
+            fi
         fi
     done
 
