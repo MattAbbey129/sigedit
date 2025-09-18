@@ -12,12 +12,16 @@ check_if_editor_is_set() {
     fi
 }
 
+generate_file_path() {
+    mkdir -p "${HOME}/.local/state/sigedit"
+    echo "${HOME}/.local/state/sigedit/$(mktemp --dry-run "$(date +%Y%m%d%H%M%S)".XXXXXXXXXX)"
+}
+
 main() {
 
     check_if_editor_is_set
 
-    mkdir -p "${HOME}/.local/state/sigedit"
-    local FILE_PATH="${HOME}/.local/state/sigedit/$(mktemp --dry-run "$(date +%Y%m%d%H%M%S)".XXXXXXXXXX)"
+    local FILE_PATH="$(generate_file_path)"
     readonly FILE_PATH
 
     local MESSAGE_FINISHED=false
