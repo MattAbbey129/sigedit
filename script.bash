@@ -34,6 +34,11 @@ preview_message() {
     echo -e '\n------END PGP SIGNED MESSAGE------\n'
 }
 
+display_prompt_instructions() {
+    echo 'Type the action to perform and press ENTER, or press CTRL+C to cancel'
+    echo '(Pressing ENTER without making a selection will default to: sign)'
+}
+
 main() {
 
     check_if_editor_is_set
@@ -49,9 +54,7 @@ main() {
         check_if_message_is_unsaved_or_empty
 
         preview_message
-
-        echo 'Type the action to perform and press ENTER, or press CTRL+C to cancel'
-        echo '(Pressing ENTER without making a selection will default to: sign)'
+        display_prompt_instructions
 
         local MESSAGE_ACTION=''
 
