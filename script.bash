@@ -17,6 +17,16 @@ generate_file_path() {
     echo "${HOME}/.local/state/sigedit/$(mktemp --dry-run "$(date +%Y%m%d%H%M%S)".XXXXXXXXXX)"
 }
 
+check_if_message_is_unsaved_or_empty() {
+    if [[ ! -f "${FILE_PATH}" ]]; then
+        echo 'Message not saved'
+        exit 1
+    elif [[ -z "$(cat ${FILE_PATH})" || -z "$(cat ${FILE_PATH} | tr -d '[:space:]')" ]]; then
+        echo 'Message is empty'
+        exit 1
+    fi
+}
+
 main() {
 
     check_if_editor_is_set
@@ -29,13 +39,7 @@ main() {
         # Open editor and edit message.
         "${EDITOR}" "${FILE_PATH}"
 
-        if [[ ! -f "${FILE_PATH}" ]]; then
-            echo 'Message not saved'
-            exit 1
-        elif [[ -z "$(cat ${FILE_PATH})" || -z "$(cat ${FILE_PATH} | tr -d '[:space:]')" ]]; then
-            echo 'Message is empty'
-            exit 1
-        fi
+        check_if_message_is_unsaved_or_empty
 
         echo -e "\n${FILE_PATH}"
         echo -e '\n-----BEGIN PGP SIGNED MESSAGE-----\n'
