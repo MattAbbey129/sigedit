@@ -5,6 +5,13 @@
 
 main() {
 
+    if [[ -z "${EDITOR}" ]]; then
+        echo '$EDITOR not set'
+        exit 1
+    else
+        echo "Editing message with: ${EDITOR}"
+    fi
+
     mkdir -p "${HOME}/.local/state/sigedit"
     local FILE_PATH="${HOME}/.local/state/sigedit/$(mktemp --dry-run "$(date +%Y%m%d%H%M%S)".XXXXXXXXXX)"
     readonly FILE_PATH
