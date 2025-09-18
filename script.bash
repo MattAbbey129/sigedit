@@ -66,6 +66,19 @@ ask_to_cancel_and_delete_message() {
     fi
 }
 
+sign_message() {
+    gpg --clear-sign --output "${FILE_PATH}.asc" "${FILE_PATH}"
+    if [[ "${?}" -eq 0 ]]; then
+        printf '\n'
+        cat "${FILE_PATH}.asc"
+        echo -e "\nMessage file saved as: ${FILE_PATH}.asc"
+        exit 0
+    else
+        echo -e "\nMessage not signed. Message file is at '${FILE_PATH}' if you want to try again with 'gpg --clear-sign'"
+        exit 1
+    fi
+}
+
 main() {
 
     check_if_editor_is_set
@@ -106,16 +119,7 @@ main() {
         done
     done
 
-    gpg --clear-sign --output "${FILE_PATH}.asc" "${FILE_PATH}"
-    if [[ "${?}" -eq 0 ]]; then
-        printf '\n'
-        cat "${FILE_PATH}.asc"
-        echo -e "\nMessage file saved as: ${FILE_PATH}.asc"
-        exit 0
-    else
-        echo -e "\nMessage not signed. Message file is at '${FILE_PATH}' if you want to try again with 'gpg --clear-sign'"
-        exit 1
-    fi
+    sign_message
 
 }
 
