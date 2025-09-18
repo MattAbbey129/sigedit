@@ -39,6 +39,17 @@ display_prompt_instructions() {
     echo '(Pressing ENTER without making a selection will default to: sign)'
 }
 
+ask_to_cancel_and_delete_message() {
+    local DELETION_ACTION=''
+    read -rp 'Are you sure you want to cancel and delete this message? [y/N] ' DELETEION_ACTION
+    if [[ "${DELETEION_ACTION}" == 'y' ]]; then
+        rm "${FILE_PATH}" && echo 'Message deleted'
+        exit 0
+    else
+        echo 'Not deleting message'
+    fi
+}
+
 main() {
 
     check_if_editor_is_set
@@ -72,14 +83,7 @@ main() {
             elif [[ "${MESSAGE_ACTION}" == 'c' || "${MESSAGE_ACTION}" == 'cancel' ]]; then
                 exit 0
             elif [[ "${MESSAGE_ACTION}" == 'd' || "${MESSAGE_ACTION}" == 'delete' ]]; then
-                local DELETION_ACTION=''
-                read -rp 'Are you sure you want to cancel and delete this message? [y/N] ' DELETEION_ACTION
-                if [[ "${DELETEION_ACTION}" == 'y' ]]; then
-                    rm "${FILE_PATH}" && echo 'Message deleted'
-                    exit 0
-                else
-                    echo 'Not deleting message'
-                fi
+                ask_to_cancel_and_delete_message
             else
                 echo "Unknown action: ${MESSAGE_ACTION}"
             fi
