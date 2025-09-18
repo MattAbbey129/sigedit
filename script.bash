@@ -18,7 +18,10 @@ main() {
 
     "${EDITOR}" "${FILE_PATH}"
 
+    echo -e "\n${FILE_PATH}"
+    echo -e '\n-----BEGIN PGP SIGNED MESSAGE-----\n'
     cat "${FILE_PATH}"
+    echo -e '\n------END PGP SIGNED MESSAGE------\n'
 
     read -rp 'Press ENTER to sign this message. '
 
