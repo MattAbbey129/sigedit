@@ -39,6 +39,22 @@ display_prompt_instructions() {
     echo '(Pressing ENTER without making a selection will default to: sign)'
 }
 
+did_user_choose_to_sign_message() {
+    [[ -z "${MESSAGE_ACTION}" || "${MESSAGE_ACTION}" == 's' || "${MESSAGE_ACTION}" == 'sign' ]]
+}
+
+did_user_choose_to_edit_message() {
+    [[ "${MESSAGE_ACTION}" == 'e' || "${MESSAGE_ACTION}" == 'edit' ]]
+}
+
+did_user_choose_to_cancel_message() {
+    [[ "${MESSAGE_ACTION}" == 'c' || "${MESSAGE_ACTION}" == 'cancel' ]]
+}
+
+did_user_choose_to_delete_message() {
+    [[ "${MESSAGE_ACTION}" == 'd' || "${MESSAGE_ACTION}" == 'delete' ]]
+}
+
 ask_to_cancel_and_delete_message() {
     local DELETION_ACTION=''
     read -rp 'Are you sure you want to cancel and delete this message? [y/N] ' DELETEION_ACTION
@@ -73,16 +89,16 @@ main() {
             printf '\n'
             read -rp '[ s/sign | e/edit | c/cancel | d/delete ] ' MESSAGE_ACTION
 
-            if [[ -z "${MESSAGE_ACTION}" || "${MESSAGE_ACTION}" == 's' || "${MESSAGE_ACTION}" == 'sign' ]]; then
+            if did_user_choose_to_sign_message; then
                 local MESSAGE_FINISHED=true
                 echo -e 'Signing message...\n'
                 break # from this 'while true' loop
-            elif [[ "${MESSAGE_ACTION}" == 'e' || "${MESSAGE_ACTION}" == 'edit' ]]; then
+            elif did_user_choose_to_edit_message; then
                 echo 'Editing message...'
                 break # from this 'while true' loop
-            elif [[ "${MESSAGE_ACTION}" == 'c' || "${MESSAGE_ACTION}" == 'cancel' ]]; then
+            elif did_user_choose_to_cancel_message; then
                 exit 0
-            elif [[ "${MESSAGE_ACTION}" == 'd' || "${MESSAGE_ACTION}" == 'delete' ]]; then
+            elif did_user_choose_to_delete_message; then
                 ask_to_cancel_and_delete_message
             else
                 echo "Unknown action: ${MESSAGE_ACTION}"
