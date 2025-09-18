@@ -31,7 +31,15 @@ main() {
     cat "${FILE_PATH}"
     echo -e '\n------END PGP SIGNED MESSAGE------\n'
 
-    read -rp 'Press ENTER to sign this message. '
+    echo 'Type the action to perform and press ENTER, or press CTRL+C to cancel'
+    echo '(Pressing ENTER without making a selection will default to: sign)'
+
+    local MESSAGE_ACTION=''
+
+    while true; do
+        printf '\n'
+        read -rp '[ s/sign | e/edit | c/cancel | d/delete ] ' MESSAGE_ACTION
+    done
 
     gpg --clear-sign --output "${FILE_PATH}.asc" "${FILE_PATH}"
     if [[ "${?}" -eq 0 ]]; then
