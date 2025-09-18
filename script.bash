@@ -39,6 +39,11 @@ main() {
     while true; do
         printf '\n'
         read -rp '[ s/sign | e/edit | c/cancel | d/delete ] ' MESSAGE_ACTION
+
+        if [[ -z "${MESSAGE_ACTION}" || "${MESSAGE_ACTION}" == 's' || "${MESSAGE_ACTION}" == 'sign' ]]; then
+            echo -e 'Signing message...\n'
+            break # from the 'while true' loop
+        fi
     done
 
     gpg --clear-sign --output "${FILE_PATH}.asc" "${FILE_PATH}"
