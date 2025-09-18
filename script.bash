@@ -97,7 +97,6 @@ main() {
         display_prompt_instructions
 
         local MESSAGE_ACTION=''
-
         while true; do
             printf '\n'
             read -rp '[ s/sign | e/edit | c/cancel | d/delete ] ' MESSAGE_ACTION
