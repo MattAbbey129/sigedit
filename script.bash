@@ -21,6 +21,9 @@ main() {
     if [[ ! -f "${FILE_PATH}" ]]; then
         echo 'Message not saved'
         exit 1
+    elif [[ -z "$(cat ${FILE_PATH})" || -z "$(cat ${FILE_PATH} | tr -d '[:space:]')" ]]; then
+        echo 'Message is empty'
+        exit 1
     fi
 
     echo -e "\n${FILE_PATH}"
