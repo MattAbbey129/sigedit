@@ -18,6 +18,11 @@ main() {
 
     "${EDITOR}" "${FILE_PATH}"
 
+    if [[ ! -f "${FILE_PATH}" ]]; then
+        echo 'Message not saved'
+        exit 1
+    fi
+
     echo -e "\n${FILE_PATH}"
     echo -e '\n-----BEGIN PGP SIGNED MESSAGE-----\n'
     cat "${FILE_PATH}"
