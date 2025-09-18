@@ -26,6 +26,7 @@ main() {
 
     local MESSAGE_FINISHED=false
     while ! ${MESSAGE_FINISHED}; do
+        # Open editor and edit message.
         "${EDITOR}" "${FILE_PATH}"
 
         if [[ ! -f "${FILE_PATH}" ]]; then
